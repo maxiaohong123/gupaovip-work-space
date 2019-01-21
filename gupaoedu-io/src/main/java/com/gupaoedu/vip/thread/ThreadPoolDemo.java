@@ -7,7 +7,7 @@ public class ThreadPoolDemo implements  Runnable{
     static ExecutorService executorService = Executors.newFixedThreadPool(100);
     static ExecutorService executorService1 = Executors.newSingleThreadExecutor();
     static ExecutorService executorService2 = Executors.newCachedThreadPool();
-    static ExecutorService executorService3 = Executors.newScheduledThreadPool()
+//    static ExecutorService executorService3 = Executors.newScheduledThreadPool();
 
 
     @Override

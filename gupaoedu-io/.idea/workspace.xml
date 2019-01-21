@@ -655,7 +655,7 @@
       <workItem from="1547110716185" duration="2730000" />
       <workItem from="1547452097858" duration="6942000" />
       <workItem from="1547689057169" duration="379000" />
-      <workItem from="1547705951650" duration="8090000" />
+      <workItem from="1547705951650" duration="8150000" />
     </task>
     <task id="LOCAL-00001" summary="第一次提交nio作业">
       <created>1541396087773</created>
@@ -668,7 +668,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88173000" />
+    <option name="totallyTimeSpent" value="88233000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -717,7 +717,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>jar://C:/Program Files/Java/jdk1.8.0_77/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java</url>
+          <url />
           <line>1849</line>
           <properties />
           <option name="timeStamp" value="4" />
@@ -729,19 +729,19 @@
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>jar://C:/Program Files/Java/jdk1.8.0_77/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java</url>
+          <url />
           <line>2034</line>
           <properties />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>jar://C:/Program Files/Java/jdk1.8.0_77/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java</url>
+          <url />
           <line>1848</line>
           <properties />
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>jar://C:/Program Files/Java/jdk1.8.0_77/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java</url>
+          <url />
           <line>653</line>
           <properties />
           <option name="timeStamp" value="15" />
