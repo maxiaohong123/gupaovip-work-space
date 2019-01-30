@@ -9,8 +9,5 @@
         <module name="gupaoedu-io" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="gupaoedu-io" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>
