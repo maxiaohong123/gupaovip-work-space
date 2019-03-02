@@ -24,25 +24,25 @@ import java.util.concurrent.ConcurrentHashMap;
  * @desc  这是手写spring的mini版本1.0  ，描述了spring框架中的定位、加载 、注册、依赖注入的全过程，虽然没有spring的详细，但是整体体现了spring框架的定位、加载、注册、依赖注入的全过程。
  */
 public class DispatchServlet extends HttpServlet {
-    private Properties contextConfig = new Properties();
-    private Map<String,Object> beanMap = new ConcurrentHashMap<String,Object>();
-    private List<String> classNames = new ArrayList<String>();
+
+    private final String  LOCATION = "contextConfigLocation";
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       doPost(req,resp);
+     //  doPost(req,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("调用doPost方法1111111");
-        resp.getWriter().write("hello:maxiao");
+//        System.out.println("调用doPost方法1111111");
+//        resp.getWriter().write("hello:maxiao");
+        this.doGet(req,resp);
     }
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        System.out.println("调用init方法");
+//        System.out.println("调用init方法");
         //开始初始化过程
-        GPApplicationContext context = new GPApplicationContext();
+        GPApplicationContext context = new GPApplicationContext(config.getInitParameter(LOCATION));
          
         //看到spring(05下) 44：46分钟了，打算调试的那个时间点。
     }

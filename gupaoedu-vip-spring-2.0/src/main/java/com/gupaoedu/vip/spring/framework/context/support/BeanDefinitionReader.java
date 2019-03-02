@@ -24,8 +24,9 @@ public class BeanDefinitionReader {
     private static final String SCAN_PACKAGE = "scanPackage";
     public BeanDefinitionReader(String ... locations){
         //在Spring中，是通过Reader去查找和定位。
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream(locations[0].replace("classpath:",""));
+        InputStream is = null;
         try {
+            is = this.getClass().getClassLoader().getResourceAsStream(locations[0].replace("classpath:",""));
             config.load(is);
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,7 +46,7 @@ public class BeanDefinitionReader {
     }
 
     public List<String> loadBeanDefinitions(){
-        return null;
+        return this.registryBeanClasses;
     }
 
     //每注册一个className,就返回一个BeanDefinition自己包装。

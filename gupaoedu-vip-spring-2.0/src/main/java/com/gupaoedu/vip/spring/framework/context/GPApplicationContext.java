@@ -1,5 +1,6 @@
 package com.gupaoedu.vip.spring.framework.context;
 
+import com.gupaoedu.vip.spring.demo.action.MyAction;
 import com.gupaoedu.vip.spring.framework.annotation.GPAutowired;
 import com.gupaoedu.vip.spring.framework.annotation.GPController;
 import com.gupaoedu.vip.spring.framework.annotation.GPService;
@@ -49,16 +50,27 @@ public class GPApplicationContext implements BeanFactory {
         //依赖注入（lazy-init=false 要执行依赖注入，也就是自动调用getBean方法）
 
         doAutowired();
+
+        MyAction myAction = (MyAction) this.getBean("myAction");
+         myAction.query(null,null,"tom");
     }
 
     //开始执行自动化的依赖注入
     private void doAutowired() {
+        //1、在Spring中，当我们向spring容器调用getBean方法的时候，spring才开始实例化容器中的Bean实例 。所以先实例化所有Bean。
         for(Map.Entry<String,BeanDefinition> beanDefinitionEntry:this.beanDefinitionMap.entrySet()){
             String beanName = beanDefinitionEntry.getKey();
             if(!beanDefinitionEntry.getValue().isLazyInit()){
                 getBean(beanName);
             }
         }
+
+        //2、再注入属性。
+        for(Map.Entry<String,BeanWrapper> beanWrapperEntry:this.beanWrapperMap.entrySet()){
+           populateBean(beanWrapperEntry.getKey(),beanWrapperEntry.getValue().getWrappedInstance());
+        }
+
+
     }
 
     public void populateBean(String beanName,Object instance){
@@ -80,6 +92,7 @@ public class GPApplicationContext implements BeanFactory {
              }
              filed.setAccessible(true);
             try {
+                System.out.println("============="+instance+","+autowiredBeanName+","+this.beanWrapperMap.get(autowiredBeanName));
                 filed.set(instance,this.beanWrapperMap.get(autowiredBeanName).getWrappedInstance());
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -144,7 +157,7 @@ public class GPApplicationContext implements BeanFactory {
 
             //在实例初始化以后调用一次
             beanPostProcessor.postProcessAfterInitialization(instance,beanName);
-            populateBean(beanName,instance);
+           // populateBean(beanName,instance); //此处还不能注入Bean,因为有可能注入的那个实例属性还没有实例化
             //通过这样一调用，相当于给我们自己留有了可操作的空间。
             return this.beanWrapperMap.get(beanName).getWrappedInstance();
         }catch (Exception e){
