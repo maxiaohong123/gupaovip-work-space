@@ -45,12 +45,53 @@ public class DispatchServlet extends HttpServlet {
         GPApplicationContext context = new GPApplicationContext(config.getInitParameter(LOCATION));
          
         //看到spring(05下) 44：46分钟了，打算调试的那个时间点。
+        initStrategies(context);
     }
 
-    private void initHandlerMapping() {
+    
+
+
+    protected void initStrategies(GPApplicationContext context) {
+        initMultipartResolver(context);
+        initLocaleResolver(context);
+        initThemeResolver(context);
+        //自己实现
+        initHandlerMappings(context);
+        //自己实现 
+        initHandlerAdapters(context);
+        initHandlerExceptionResolvers(context);
+        initRequestToViewNameTranslator(context);
+        //自己实现 
+        initViewResolvers(context);
+        initFlashMapManager(context);
     }
 
+    private void initFlashMapManager(GPApplicationContext context) {
+    }
 
+    private void initViewResolvers(GPApplicationContext context) {
+    }
+
+    private void initHandlerExceptionResolvers(GPApplicationContext context) {
+    }
+
+    private void initHandlerAdapters(GPApplicationContext context) {
+    }
+
+    private void initHandlerMappings(GPApplicationContext context) {
+    }
+
+    private void initRequestToViewNameTranslator(GPApplicationContext context) {
+    }
+
+    private void initThemeResolver(GPApplicationContext context) {
+    }
+
+    private void initLocaleResolver(GPApplicationContext context) {
+    }
+
+    private void initMultipartResolver(GPApplicationContext context) {
+    }
 
     private String lowerFirst(String str){
         char[] chars = str.toCharArray();
