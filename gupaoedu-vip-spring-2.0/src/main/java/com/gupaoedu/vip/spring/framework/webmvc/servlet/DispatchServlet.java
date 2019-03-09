@@ -51,6 +51,7 @@ public class DispatchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        doPost(req,resp);
+       //看到07（下） 46：32 了
     }
 
     @Override
@@ -73,6 +74,7 @@ public class DispatchServlet extends HttpServlet {
         try {
             doDispatch(req,resp);
         } catch (Exception e) {
+            e.printStackTrace();
             resp.getWriter().write("500 Exception,Detailes:\r\n"+Arrays.toString(e.getStackTrace()).replaceAll("\\[|\\]","").replaceAll("\\s","\r\n")+"@GupaoMVC");
         }
 
@@ -87,18 +89,37 @@ public class DispatchServlet extends HttpServlet {
              }
             GPHandlerAdapter ha = getHandlerAdapter(handler);
 
+             //调用handle方法，得到返回值
             GPModelAndView mv = ha.handle(req,resp,handler);
-
+            //返回给客户端
             processDispatchResult(resp,mv);
 
     }
 
-    private void processDispatchResult(HttpServletResponse resp, GPModelAndView mv) {
+    private void processDispatchResult(HttpServletResponse resp, GPModelAndView mv) throws Exception{
+        //调用viewResolver的resolveView方法
+        if(null==mv) return;
+        if(this.viewResolvers.isEmpty()){
+            return;
+        }
+        for(GPViewResolver viewResolver:this.viewResolvers){
+            if(!mv.getViewName().equals(viewResolver.getViewName())){
+               continue;
+            }
+            String out = viewResolver.viewResolver(mv);
+            if(out!=null){
+                resp.getWriter().write(out);
+                break;
+            }
+        }
 
     }
 
     private GPHandlerAdapter getHandlerAdapter(GPHandlerMapping handler) {
-        return  null;
+        if(this.handlerAdapters.isEmpty()){
+            return  null;
+        }
+        return  this.handlerAdapters.get(handler);
     }
 
     private GPHandlerMapping getHandler(HttpServletRequest req) {
@@ -240,7 +261,7 @@ public class DispatchServlet extends HttpServlet {
             for(Method method:methods){
                 if(!method.isAnnotationPresent(GPRequestMapping.class)){continue;}
                 GPRequestMapping requestMapping = method.getAnnotation(GPRequestMapping.class);
-                String regex =("/"+baseUrl+requestMapping.value().replaceAll("/+","/"));
+                String regex =("/" + baseUrl +requestMapping.value().replaceAll("\\*",".*")).replaceAll("/+","/");
                 Pattern pattern = Pattern.compile(regex);
                 //3. 将Controller-->method中的url拼接起来封装为一个Pattern，Controller,method,pattern三者封装为一个GPHandlerMapping放入handlerMapping集合中。
                 this.handlerMappings.add(new GPHandlerMapping(pattern,controller,method));
