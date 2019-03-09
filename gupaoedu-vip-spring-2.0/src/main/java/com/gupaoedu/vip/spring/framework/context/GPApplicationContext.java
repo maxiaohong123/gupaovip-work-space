@@ -14,6 +14,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -51,8 +52,8 @@ public class GPApplicationContext implements BeanFactory {
 
         doAutowired();
 
-        MyAction myAction = (MyAction) this.getBean("myAction");
-         myAction.query(null,null,"tom");
+//        MyAction myAction = (MyAction) this.getBean("myAction");
+//         myAction.query(null,null,"tom");
     }
 
     //开始执行自动化的依赖注入
@@ -184,5 +185,19 @@ public class GPApplicationContext implements BeanFactory {
 
         }
         return null;
+    }
+
+    public int getBeanDefinitionCount() {
+
+        return this.beanDefinitionMap.size();
+    }
+
+    public String[] getBeanDefinitionNames() {
+
+        return this.beanDefinitionMap.keySet().toArray(new String[this.beanDefinitionMap.size()]);
+    }
+
+    public Properties getConfig(){
+        return this.reader.getConfig();
     }
 }

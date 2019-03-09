@@ -24,11 +24,11 @@ public class MyAction {
     IModifyService modifyService;
 
     @GPRequestMapping("/query.json")
-    public void query(HttpServletRequest request, HttpServletResponse response,
+    public GPModelAndView query(HttpServletRequest request, HttpServletResponse response,
                                 @GPRequestParam("name") String name){
         String result = queryService.query(name);
         System.out.println(result);
-//        return out(response,result);
+        return out(response,result);
     }
 
     @GPRequestMapping("/add*.json")
