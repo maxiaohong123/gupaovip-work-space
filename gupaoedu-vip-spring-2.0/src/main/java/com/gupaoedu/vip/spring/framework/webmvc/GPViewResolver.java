@@ -41,22 +41,24 @@ public class GPViewResolver {
     {
         StringBuffer sb = new StringBuffer();
         RandomAccessFile ra = new RandomAccessFile(this.templateFile,"r");
+
         String line = null;
         while (null!=(line=ra.readLine())){
+            line = new String(line.getBytes("ISO-8859-1"), "utf-8");
             Matcher m = matcher(line);
             while (m.find()){
-                for(int i=1;i<m.groupCount();i++){
+                for(int i=1;i<=m.groupCount();i++){ //此处是<=号，否则是匹配不成功的。
                     //要把￥{}中间的这个字符串给取出来
                     String paramName = m.group(i);
                     Object paramValue = mv.getModel().get(paramName);
                     if(null==paramName)continue;
                     line = line.replaceAll("￥\\{"+paramName+"\\}",paramValue.toString());
-
+                    line = new String(line.getBytes("utf-8"), "ISO-8859-1");
                 }
             }
             sb.append(line);
         }
-        return  null;
+        return  sb.toString();
     }
 
     private Matcher matcher(String str){
@@ -64,4 +66,44 @@ public class GPViewResolver {
         Matcher matcher = pattern.matcher(str);
         return  matcher;
     }
+
+//----------------------以下是老师代码-------------------
+//    public String viewResolver(GPModelAndView mv) throws Exception{
+//        StringBuffer sb = new StringBuffer();
+//
+//        RandomAccessFile ra = new RandomAccessFile(this.templateFile,"r");
+//
+//        try {
+//            String line = null;
+//            while (null != (line = ra.readLine())) {
+//                line = new String(line.getBytes("ISO-8859-1"), "utf-8");
+//                Matcher m = matcher(line);
+//                while (m.find()) {
+//                    for (int i = 1; i <= m.groupCount(); i++) {
+//
+//                        //要把￥{}中间的这个字符串给取出来
+//                        String paramName = m.group(i);
+//                        Object paramValue = mv.getModel().get(paramName);
+//                        if (null == paramValue) {
+//                            continue;
+//                        }
+//                        line = line.replaceAll("￥\\{" + paramName + "\\}", paramValue.toString());
+//                        line = new String(line.getBytes("utf-8"), "ISO-8859-1");
+//                    }
+//                }
+//                sb.append(line);
+//            }
+//        }finally {
+//            ra.close();
+//        }
+//
+//        return sb.toString();
+//    }
+//
+//    private Matcher matcher(String str){
+//        Pattern pattern = Pattern.compile("￥\\{(.+?)\\}",Pattern.CASE_INSENSITIVE);
+//        Matcher matcher = pattern.matcher(str);
+//        return  matcher;
+//    }
+
 }

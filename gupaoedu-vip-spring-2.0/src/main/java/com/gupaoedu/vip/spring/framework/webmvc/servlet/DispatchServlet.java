@@ -71,6 +71,7 @@ public class DispatchServlet extends HttpServlet {
 //        } catch (InvocationTargetException e) {
 //            e.printStackTrace();
 //        }
+        //这是结合spring实现的springMVC方式
         try {
             doDispatch(req,resp);
         } catch (Exception e) {
