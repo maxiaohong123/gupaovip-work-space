@@ -72,7 +72,8 @@ public class GPBeanDefinitionReader {
 
    //递归扫描所有的相关的class,并且将扫描到的该包下的所有类名全称放到一个list中。
     private void doScanner(String packageName) {
-        URL url = this.getClass().getClassLoader().getResource("/"+packageName.replaceAll("\\.","/"));
+//        URL url = this.getClass().getClassLoader().getResource("/"+packageName.replaceAll("\\.","/"));//web环境下
+        URL url = this.getClass().getResource("/"+packageName.replaceAll("\\.","/"));//main方法环境下
         File classDir = new File(url.getFile());
         for(File file: classDir.listFiles()){
             if(file.isDirectory()){
